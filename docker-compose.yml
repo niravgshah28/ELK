@@ -9,7 +9,6 @@ services:
             - "discovery.type=single-node"
         ports:
             - 9200:9200
-            - 9300:9300
         networks:
             - elknetwork
     kibana:
@@ -17,7 +16,7 @@ services:
         container_name: kibana
         hostname: kibana
         ports:
-            - 5601:5601
+            - 8080:8080
         links:
             - elasticsearch:elasticsearch
         depends_on:
@@ -30,7 +29,6 @@ services:
         hostname: logstash
         ports:
             - 9600:9600
-            - 8089:8089
         volumes:
           - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro
         links:
@@ -44,7 +42,7 @@ services:
         depends_on:
         - logstash
         ports:
-        - 8080:8080
+        - 80:80
         logging:
           driver: gelf
           options:
